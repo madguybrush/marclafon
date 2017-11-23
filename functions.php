@@ -118,23 +118,29 @@ add_action( 'widgets_init', 'marclafon_widgets_init' );
  */
 function marclafon_scripts() {
     
-    /*css*/
-    wp_enqueue_style( 'bootstrapCss', get_template_directory_uri() . '/bootstrap/css/bootstrap.min.css',false,'3.7','all');
+    /*css files*/
+    
+    wp_enqueue_style( 'marclafon-animateCss', get_template_directory_uri() . '/animate.css',false,null,'all');
+     wp_enqueue_style( 'marclafon-normalizeCss', get_template_directory_uri() . '/normalize.css',false,null,'all');
+     wp_enqueue_style( 'marclafon-swiperCss', get_template_directory_uri() . '/swiper/css/swiper.min.css',false,null,'all');
+    wp_enqueue_style( 'marclafon-bootstrapCss', get_template_directory_uri() . '/bootstrap/css/bootstrap.min.css',false,null,'all');
     
 	wp_enqueue_style( 'marclafon-style', get_stylesheet_uri() );
     
     /*js*/
     
-        wp_enqueue_script( 'Jquery', get_template_directory_uri() . '/js/jquery-3.2.1.min.js', array(), '20170311', true );
+        wp_enqueue_script( 'marclafon-Jquery', get_template_directory_uri() . '/js/jquery-3.2.1.min.js', array(), null, true );
     
     
-      wp_enqueue_script( 'imagesLoaded', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', array(), '20170311', true );
+      wp_enqueue_script( 'marclafon-imagesLoaded', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', array(), null, true );
     
-     wp_enqueue_script( 'masonry', get_template_directory_uri() . '/js/masonry.pkgd.min.js', array(), '20170311', true );
+     wp_enqueue_script( 'marclafon-masonry', get_template_directory_uri() . '/js/masonry.pkgd.min.js', array(), null, true );
     
-    wp_enqueue_script( 'bootstrapJS', get_template_directory_uri() . '/bootstrap/js/bootstrap.min.js', array(), '20170311', true );
+    wp_enqueue_script( 'marclafon-bootstrapJS', get_template_directory_uri() . '/bootstrap/js/bootstrap.min.js', array(), null, true );
     
-     wp_enqueue_script( 'swiper', get_template_directory_uri() . '/swiper/js/swiper.min.js', array(), '20170311', true );
+     wp_enqueue_script( 'marclafon-swiper', get_template_directory_uri() . '/swiper/js/swiper.min.js', array(), null, true );
+    
+         wp_enqueue_script( 'marclafon-script', get_template_directory_uri() . '/js/script.js', array(), null, true );
     
 	wp_enqueue_script( 'marclafon-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
@@ -178,14 +184,51 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 /**
 * Add a custom link to the end of a specific menu that uses the wp_nav_menu() function
 */
+
+/*
 add_filter('wp_nav_menu_items', 'add_behance_link', 10, 2);
 function add_behance_link($items, $args){
     if( $args->theme_location == 'menu-1' ){
         $path = get_stylesheet_directory_uri() .'/img/behance.png';
         //echo $path;
-        $items .= '<li><a href="#"><img class="logobehance" src="'.$path.'" /></a></li>';
+        $items .= '<li><a href="https://www.behance.net/marclafon" target="blank"><img class="logobehance" src="'.$path.'" /></a></li>';
         
         
     }
     return $items;
+}*/
+
+
+
+/**********https://stackoverflow.com/questions/11248628/disable-wordpress-from-adding-p-tags**********/
+remove_filter( 'the_content', 'wpautop' );
+remove_filter( 'the_excerpt', 'wpautop' );
+
+
+/**************gestion class active du menu*****************/
+add_filter('nav_menu_css_class' , 'special_nav_class' , 10 , 2);
+
+function special_nav_class ($classes, $item) {
+    if (in_array('current-menu-item', $classes) ){
+        $classes[] = 'active ';
+    }
+    return $classes;
+}
+
+
+/******************* recovering current template************/
+
+add_filter( 'template_include', 'var_template_include', 1000 );
+function var_template_include( $t ){
+    $GLOBALS['current_theme_template'] = basename($t);
+    return $t;
+}
+
+function get_current_template( $echo = false ) {
+    if( !isset( $GLOBALS['current_theme_template'] ) )
+        return false;
+    if( $echo )
+        echo $GLOBALS['current_theme_template'];
+    else
+        return $GLOBALS['current_theme_template'];
 }

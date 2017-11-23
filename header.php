@@ -34,15 +34,15 @@
 </head>
 
 <body>
-
-<header class="headerhome">
+<!--<div><strong>Current template:</strong>--> <?php //get_current_template( true ); ?><!--</div>-->
+<header  <?php if ( is_front_page()  ) : ?> class="headerhome" <?php else : ?> class="header" <?php endif; ?> >
 
 	
-		<nav class="navbar navbar-default">
+		<nav id="menu" class="navbar navbar-default">
 		<div class="container-fluid">
     <div class="navbar-header row">
 		  <div class="col-xs-10">
-      <a  href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><img  class="logo" src="<?php bloginfo('stylesheet_directory');?>/img/logo.png" /></a>	  
+      <a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><img  class="logo" src="<?php bloginfo('stylesheet_directory');?>/img/logo.png" /></a>	  
 
 	  </div>
 		  <div class="col-xs-2">
@@ -75,4 +75,4 @@
 	
 </header>
 
-	<div id="content" class="site-content">
+	<!--<div id="content" class="site-content">-->

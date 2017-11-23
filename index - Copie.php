@@ -14,9 +14,9 @@
 
 get_header(); ?>
 
-	<!-- <div id="primary" class="content-area"> -->
-	<!-- <main id="main" class="site-main"> -->
-
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main">
+loooooooooooool
 		<?php
 		if ( have_posts() ) :
 
@@ -27,7 +27,6 @@ get_header(); ?>
 
 			<?php
 			endif;
-
 
 			/* Start the Loop */
 			while ( have_posts() ) : the_post();
@@ -41,15 +40,7 @@ get_header(); ?>
 
 			endwhile;
 
-			/*the_posts_navigation();*/
-
-/*the_post_navigation( array(
-            'prev_text'                  => __( 'prev chapter: %title' ),
-            'next_text'                  => __( 'next chapter: %title' ),
-            'in_same_term'               => true,
-            'taxonomy'                   => __( 'post_tag' ),
-            'screen_reader_text' => __( 'Continue Reading' ),
-        ) );*/
+			the_posts_navigation();
 
 		else :
 
@@ -57,8 +48,8 @@ get_header(); ?>
 
 		endif; ?>
 
-		<!--</main><!-- #main -->
-	<!--</div><!-- #primary -->
+		</main><!-- #main -->
+	</div><!-- #primary -->
 
 <?php
 get_sidebar();
