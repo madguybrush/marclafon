@@ -17,19 +17,32 @@
     <section id="contenuProjet"> 
 
 	 <div id="project-infos-text" style="opacity: 1;">
-		<span>
+
+         
+         
+         		<span>
 		<h2><?php the_title(); ?></h2>
-		<h3 class="titreinfos">commanditaire</h3>
-		<h4 class="infos"><?php echo get_post_meta( get_the_ID(), 'commanditaire', true ); ?></h4>
-		<h3 class="titreinfos">support</h3>
-		<h4 class="infos"><?php echo get_post_meta( get_the_ID(), 'support', true ); ?></h4>
-		<h3 class="titreinfos">commande</h3>
-		<h4 class="infos"><?php echo get_post_meta( get_the_ID(), 'commande', true ); ?></h4>
-		<h3 class="titreinfos">année</h3>
-		<h4 class="infos"><?php echo get_post_meta( get_the_ID(), 'année', true ); ?></h4>
-		<h3 class="titreinfos">catégorie</h3>
-		<h4 class="infos"><?php echo get_post_meta( get_the_ID(), 'catégorie', true ); ?></h4>
+                    
+        <?php 
+                    
+
+  $custom_field_keys = get_post_custom_keys();
+  foreach ( $custom_field_keys as $key => $value ) {
+    $valuet = trim($value);
+      if ( '_' == $valuet{0} )
+      continue;
+    ?> <h3 class="titreinfos"><?php echo " " . $value . "</h3>";
+      echo '<h4 class="infos">' . get_post_meta( get_the_ID(), $value, true ) . "</h4>"; 
+  }
+             
+
+                    
+                    ?>
+
+    
 		</span>
+         
+         
 	</div>
 	<?php $prev = get_permalink(get_adjacent_post(false,'',false));
         $next = get_permalink(get_adjacent_post(false,'',true));  ?>
@@ -46,18 +59,21 @@
 		<div class="swiper-wrapper">
 			<!-- Slides -->
             <?php
-$thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'your_thumb_handle' );
+//$thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'your_thumb_handle' );
 ?>
-			<div class="swiper-slide"><img src="<?php echo $thumbnail['0']; ?>"/></div>
+			<!-- <div class="swiper-slide"><img src="--><?php //echo $thumbnail['0']; ?><!--"/></div>-->
             
             
             <?php  
             global $post;
-            $galleries = get_post_gallery_images( $post ); 
+            $galleries = get_post_gallery_images_with_info( $post ); 
             foreach ($galleries as $key => $val) {
             //echo $val; ?>
-             <div class="swiper-slide"><img src="<?php echo $val;  ?>"/></div>
-           
+            <?php if ($val['description'] == 'full'){  ?>
+            <div class="swiper-slide pj-image-display-fullscreen"><div class="swiper-zoom-container" style="background-image: url('<?php echo $val['src'] ?>"></div></div>
+            <?php } else { ?>
+             <div class="swiper-slide"><img src="<?php echo $val['src'];  ?>"/></div>
+           <?php } ?>
                 
             <?php   } ?> 
 
