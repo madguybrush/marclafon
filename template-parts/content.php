@@ -44,6 +44,15 @@
          
          
 	</div>
+         
+         
+         <a href="#" id="project-infos" class="">
+             <span style="background-color: rgb(224, 224, 224);"></span>
+             <span style="background-color: rgb(224, 224, 224);"></span>
+         </a>
+         
+         
+         
 	<?php $prev = get_permalink(get_adjacent_post(false,'',false));
         $next = get_permalink(get_adjacent_post(false,'',true));  ?>
 	<div id="project-navigation" style="">
@@ -67,6 +76,7 @@
             <?php  
             global $post;
             $galleries = get_post_gallery_images_with_info( $post ); 
+            if (!empty($galleries)){
             foreach ($galleries as $key => $val) {
             //echo $val; ?>
             <?php if ($val['description'] == 'full'){  ?>
@@ -76,7 +86,10 @@
            <?php } ?>
                 
             <?php   } ?> 
-
+           <?php } else { ?> 
+            <div class="swiper-slide">
+           <?php the_post_thumbnail();}?> 
+</div>
            
             
             

@@ -235,7 +235,7 @@ function get_current_template( $echo = false ) {
 }
 
 
-/******************* image galley metadata************/
+/******************* image gallery metadata************/
 
 function get_post_gallery_images_with_info($postvar = NULL) {
     if(!isset($postvar)){
@@ -245,7 +245,7 @@ function get_post_gallery_images_with_info($postvar = NULL) {
 
 
     $post_content = $postvar->post_content;
-    preg_match('/\[gallery.*ids=.(.*).\]/', $post_content, $ids);
+    if (preg_match('/\[gallery.*ids=.(.*).\]/', $post_content, $ids)){
     $images_id = explode(",", $ids[1]); //we get the list of IDs of the gallery as an Array
 
 
@@ -264,4 +264,10 @@ function get_post_gallery_images_with_info($postvar = NULL) {
         );
     }
     return $image_gallery_with_info;
+     } else {
+        return null;
+    }
+    
 }
+
+
