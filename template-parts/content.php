@@ -53,15 +53,44 @@
          
          
          
-	<?php $prev = get_permalink(get_adjacent_post(false,'',false));
-        $next = get_permalink(get_adjacent_post(false,'',true));  ?>
+	<?php 
+         if (isset($_GET['category'])) {
+    $category = $_GET['category'];
+             // $prev = get_permalink(get_adjacent_post(true,'',false));
+        //$next = get_permalink(get_adjacent_post(true,'',true));  
+               //$prev = get_permalink(get_adjacent_post(true,'',false));
+        //$next = get_permalink(get_adjacent_post(true,'',true));     
+             $prev = add_query_arg( 'category', $category, get_permalink(get_adjacent_post(true,'',false)) );
+             $next = add_query_arg( 'category', $category, get_permalink(get_adjacent_post(true,'',true)) );
+             //echo esc_url( add_query_arg( 'category', $categories[0]->name, get_permalink() ) );
+} else {
+      $prev = get_permalink(get_adjacent_post(false,'',false));
+        $next = get_permalink(get_adjacent_post(false,'',true));  
+} 
+         
+        // $prev = get_permalink(get_adjacent_post(false,'',false));
+   //     $next = get_permalink(get_adjacent_post(false,'',true));  
+         
+         //if user is coming from a category page
+         //get post of current category only
+    
+
+         ?>
+         
+         <?php 
+         if (isset($_GET['category'])) {
+             ?>
 	<div id="project-navigation" style="">
+		<?php if ($prev != esc_url( add_query_arg( 'category', $category, get_permalink() ) ) ) { ?><a class="project-prev" href="<?php echo $prev; ?>" style=""><img src="<?php bloginfo('stylesheet_directory');?>/img/up.png">Projet précédent</a><?php } ?> <!-- • -->
+		<?php if ($next != esc_url( add_query_arg( 'category', $category, get_permalink() ) ) ) { ?><a class="project-next" href="<?php echo $next; ?>" style="">Projet suivant<img src="<?php bloginfo('stylesheet_directory');?>/img/down.png"></a><?php } ?>
+	</div>
+         
+	 <?php } else { ?>
+ 	<div id="project-navigation" style="">
 		<?php if ($prev != get_permalink() ) { ?><a class="project-prev" href="<?php echo $prev; ?>" style=""><img src="<?php bloginfo('stylesheet_directory');?>/img/up.png">Projet précédent</a><?php } ?> <!-- • -->
 		<?php if ($next != get_permalink() ) { ?><a class="project-next" href="<?php echo $next; ?>" style="">Projet suivant<img src="<?php bloginfo('stylesheet_directory');?>/img/down.png"></a><?php } ?>
-	</div>
-	
-
- 
+  <?php }  ?>
+    
 	<!-- Slider main container -->
 	<div class="swiper-container">
 		<!-- Additional required wrapper -->
